@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const listWithOneBlog = [
     {
@@ -84,6 +85,11 @@ const format = (blog) => {
     console.log(blogs)
     return blogs.map(format)
   }
+
+  const usersInDb = async () => {
+    const users = await User.find({})
+    return users
+  }
   
 
 const dummy = (blogs) => {
@@ -167,5 +173,6 @@ module.exports = {
     mostLikes,
     format, 
     nonExistingId, 
-    blogsInDb
+    blogsInDb,
+    usersInDb
 }

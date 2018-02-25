@@ -2,8 +2,8 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Ostake6",
-    "author": "Seon",
+    "title": "käyttäjä lisättyy3",
+    "author": "Seo3n",
     "url": "randomz.org",
-    "likes": 4
+    "likes": 3
 }   
