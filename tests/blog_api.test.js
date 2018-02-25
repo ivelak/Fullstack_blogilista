@@ -73,9 +73,9 @@ describe('addition of a new blog', async () => {
     beforeAll(async () => {
         await User.remove({})
         console.log('user cleared...')
-        
+
     })
-    
+
     test('a valid blog can be added', async () => {
         const testUser = new User({ username: 'testman', name: 'Test Man', mature: true })
         await testUser.save()
@@ -227,6 +227,52 @@ describe('when there is initially one user at db', async () => {
         const usersAfterOperation = await usersInDb()
         expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
     })
+    test('POST /api/users fails if username is too short', async () => {
+        const usersBeforeOperation = await usersInDb()
+
+        const newUser = {
+            username: 'ro',
+            name: 'Superuser',
+            password: 'salainen',
+            mature: true
+        }
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body).toEqual({ error: 'username must be at least 3 characters long' })
+
+        const usersAfterOperation = await usersInDb()
+        expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+    })
+    test('POST /api/users undefined mature is true', async () => {
+        const usersBeforeOperation = await usersInDb()
+
+        const newUser = {
+            username: 'matureman',
+            name: 'Le Mature',
+            password: 'salainen'
+        }
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        const usersAfterOperation = await usersInDb()
+        expect(usersAfterOperation.length).toBe(usersBeforeOperation.length + 1)
+        const usernames = usersAfterOperation.map(u => u.username)
+        expect(usernames).toContain(newUser.username)
+
+        const response = await api
+            .get('/api/users')
+
+        const addedUser = response.body.find(user => user.username == "matureman")
+        expect(addedUser.mature).toBe(true)
+    })
+
 })
 
 afterAll(() => {

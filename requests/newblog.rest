@@ -1,8 +1,9 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhc2kiLCJpZCI6IjVhOTJmODc4ZTFkMGYxMTNlNjA5YjgzNyIsImlhdCI6MTUxOTU5MDU5M30.fZu9KSPaSkKP0W5bvSCuWFmOLR-hWWH80teh75Q2ajQ
 
 {
-    "title": "käyttäjä lisättyy3",
+    "title": "ilmankayttajaa1",
     "author": "Seo3n",
     "url": "randomz.org",
     "likes": 3
